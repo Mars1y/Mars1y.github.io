@@ -1,0 +1,18 @@
+/*导航栏居中*/
+#nav .menus_items {
+    position: absolute;
+    width: fit-content;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+}
+
+/*去掉导航栏悬浮时的蓝色下划线*/
+#nav *::after{
+    background-color: transparent!important;
+}
+
+/*footer字体颜色*/
+#footer *{
+    color: #ffffff;
+}
