@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/avatar.jpg">
 <meta property="article:published_time" content="2023-12-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-18T05:58:44.102Z">
+<meta property="article:modified_time" content="2023-12-18T06:06:34.273Z">
 <meta property="article:author" content="Mars1y">
 <meta property="article:tag" content="web安全">
 <meta name="twitter:card" content="summary">
@@ -56,7 +56,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2023-12-18 13:58:44'
+  postUpdate: '2023-12-18 14:06:34'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -181,7 +181,7 @@
 <td>O:类名长度:”类名”:类中变量个数:{……}</td>
 </tr>
 </tbody></table>
-<p>&emsp;&emsp;Object 类型序列化：</p>
+<p>​		Object 类型序列化：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>=<span class="string">&quot;Tom&quot;</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$age</span>=<span class="number">18</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$sex</span>=<span class="string">&quot;male&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$class</span> = <span class="keyword">new</span> <span class="title function_ invoke__">student</span>();</span><br><span class="line"><span class="variable">$serialize</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$class</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$serialize</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">//O:7:&quot;student&quot;:3:&#123;s:4:&quot;name&quot;;s:3:&quot;Tom&quot;;s:6:&quot;*age&quot;;i:18;s:12:&quot;studentsex&quot;;s:4:&quot;male&quot;;&#125;</span></span><br><span class="line"><span class="comment">//注意变量对应的访问修饰符，public正常，private是%00类名%00属性名，protected是%00*%00属性名</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="unserialize"><a href="#unserialize" class="headerlink" title="unserialize()"></a>unserialize()</h3><p>​		将通过 serialize() 函数序列化后的对象或数组进行反序列化，返回序列化前的内容。如果传递的字符串不可反序列化，则返回 FALSE，并产生一个 E_NOTICE。示例：</p>
