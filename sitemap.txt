@@ -1,3 +1,4 @@
+http://example.com/2024/02/08/upload-labs/
 http://example.com/2024/01/24/XSS/
 http://example.com/2023/12/18/PHPunserialize/
 http://example.com/2023/12/17/RCE/
