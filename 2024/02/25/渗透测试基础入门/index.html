@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>渗透测试基础入门 | Mars1y</title><meta name="author" content="Mars1y"><meta name="copyright" content="Mars1y"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="​		ping  www.baidu.com 这种大站时，给出来的 IP 一般不是真实 IP 。 ​		像百度这样的大厂一般会在全国各地架设 CDN（Content Delivery Network），即内容分发网络。 ​		CDN 是构建在现有网络基础之上的智能虚拟网络，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等功能，使用户就近获取所需内容，降低网络拥塞，提高用户访问响">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透测试基础入门">
+<meta property="og:url" content="http://example.com/2024/02/25/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Mars1y">
+<meta property="og:description" content="​		ping  www.baidu.com 这种大站时，给出来的 IP 一般不是真实 IP 。 ​		像百度这样的大厂一般会在全国各地架设 CDN（Content Delivery Network），即内容分发网络。 ​		CDN 是构建在现有网络基础之上的智能虚拟网络，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等功能，使用户就近获取所需内容，降低网络拥塞，提高用户访问响">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/avatar.jpg">
+<meta property="article:published_time" content="2024-02-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-25T13:48:01.915Z">
+<meta property="article:author" content="Mars1y">
+<meta property="article:tag" content="web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2024/02/25/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '渗透测试基础入门',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-02-25 21:48:01'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mogai.css"><link rel="stylesheet" href="/css/font/iconfont.css"><link rel="stylesheet" href="/css/yituliu.css"><meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="Mars1y" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon--home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-exe-article-primary"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-Link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-geren"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="Mars1y"></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon--home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-exe-article-primary"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-Link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-geren"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">渗透测试基础入门</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-02-24T16:00:00.000Z" title="发表于 2024-02-25 00:00:00">2024-02-25</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="渗透测试基础入门"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>​		ping <code> www.baidu.com</code> 这种大站时，给出来的 IP 一般不是真实 IP 。</p>
+<p>​		像百度这样的大厂一般会在全国各地架设 CDN（Content Delivery Network），即内容分发网络。</p>
+<p>​		CDN 是构建在现有网络基础之上的智能虚拟网络，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等功能，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。简言之就是既减少主机负担，又方便用户访问。CDN 的关键技术主要有内容存储和分发技术。</p>
+<p>​		显然如果你渗透的是 CDN 站而不是主站的话，是没有意义的。</p>
+<p>​		web 的大致组成架构：网站源码、web 中间件、操作系统、数据库。</p>
+<p>​		web 安全研究的大致就是这几个方向。</p>
+<p>​		信息搜集常用的搜索引擎语法：</p>
+<ul>
+<li><p><code>inurl</code> ，URL 存在关键字的网页。如搜索 <code>inurl:edu.cn</code> ，将返回 url 中存在 edu.cn 的结果。</p>
+</li>
+<li><p><code>site</code> ，指定域名。</p>
+</li>
+<li><p><code>intitle</code> ，标题中存在关键字的网页。</p>
+</li>
+<li><p><code>intext</code> ，正文中存在关键字的网页。如搜索 <code>intext:Powered by Discuz</code> ，可检索到一些用 Discuz CMS 构建的网站。</p>
+</li>
+<li><p><code>filetype</code> ，指定文件类型。</p>
+</li>
+</ul>
+<p>​		应用举例：<code>intitle:管理系统 filetype:php</code> ，查询标题含“管理系统”，且用 php 构建的网页。</p>
+<p>​		域名搜集在渗透中的作用。</p>
+<p>​		举个例子，学院官网（computer.xxx.edu.cn）和学校官网（<a target="_blank" rel="noopener" href="http://www.xxx.edu.cn),很明显只存在一个子域名不同的差别.由于二者的页面布局不一样,可能学院官网和学校官网用的是两套不一样的程序来构建的,但很可能两个域名解析到的是同一个/">www.xxx.edu.cn），很明显只存在一个子域名不同的差别。由于二者的页面布局不一样，可能学院官网和学校官网用的是两套不一样的程序来构建的，但很可能两个域名解析到的是同一个</a> IP 。事实就是这样，ping 一下就知道了。</p>
+<p>​		www 域名对应该 IP 的主页，computer 对应该 IP 的分页。如果我们授权对 <a target="_blank" rel="noopener" href="http://www.xxx.edu.cn/">www.xxx.edu.cn</a> 进行渗透，但没找到突破口，而此时搜集到一个 computer 的域名，发现该域名与 www 共享一个 IP ，那么可以从 computer 对应的站找突破口。</p>
+<p>​		除了搜集子域名，还需要搜集域名后缀，如 .com、.org、.top 。可利用相关工具，或进行域名注册查询，根据如 xxx.com 的注册信息查询。</p>
+<p>​		本地 hosts 。</p>
+<p>​		路径：C:\Windows\System32\drivers\etc\hosts</p>
+<p>​		作用：不管是访问网站，还是 <code>ping</code> 之类的，在进行 DNS 域名解析时，首先是在本地 hosts 文件里搜索，搜索不到再请求 DNS 服务器进行解析。假设在里面加上 <code>1.2.3.4 www.baidu.com</code> ，然后再 ping 一下，会发现域名解析成了 1.2.3.4 的 IP 。当然，此时会 ping 不通，访问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 也会失败。</p>
+<p>​		目录扫描工具原理：字典、发包、根据响应状态码判断目录。理论上自己可以写一个出来，关键在于字典。</p>
+<p>​		子域名扫描工具也是如此，但一般不好用，信息量大且无序，难以找到真正有用的一些域名。一种较好的办法是使用 Google ，搜索如 <code>site:baidu.com</code> ，然后选取前 10~20 页作为搜集内容。</p>
+<p>​		有的程序判断你是 PC 端访问还是移动端访问，仅仅是通过 UA 头判断。“同一个用户只能投票一次”这种判断是不是同一个访问者，是通过 IP 地址判断。这些简单的判断，我们可以通过改 UA 、挂代理来绕过。</p>
+<p>​		APK 反编译、APP 抓包获得的网站，用 PC 端访问当然会出错（如显示 400 Bad Request），因为请求包不对，得改为手机端访问时的包格式。</p>
+<p>​		在进行目录扫描的时候，扫 IP 地址比扫域名更好。有的网站在构建的时候，IP 地址与域名解析的目录是不一样的。通常 IP 地址对应的解析目录比域名更高一级，IP 地址解析的是根目录，这往往也是有的网站换做用 IP 地址访问时会显示禁止访问的原因。</p>
+<p>​		IIS 网站安全设置：</p>
+<ol>
+<li>身份验证：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/WarBlog/p/11250865.html">https://www.cnblogs.com/WarBlog/p/11250865.html</a></li>
+<li>IP 地址和域限制：设置指定 IP 和域名访问该网站的权限。</li>
+</ol>
+<p>​		0777 文件权限含义解析：</p>
+<p>​		文件权限通常是三位数字表示，这里的首位 0 表示的是十进制计数，所以实际的值是 777 。</p>
+<p>​		Linux 将用户分为 所有者(Owner)、组成员(Group)、其他(Other)、超级用户(Root) ，文件权限由用户的三种类型组成，每一位代表一种用户的权限：<code>[所有者][组成员][其他用户]</code> 。</p>
+<p>​		权限值由对应的描述计算得来，对应关系:</p>
+<ul>
+<li><code>r</code> → 4 可读</li>
+<li><code>w</code> → 2 可写</li>
+<li><code>x</code> → 1 可执行</li>
+<li><code>-</code> → 0 无权限</li>
+</ul>
+<p>​		所以 0777 权限含义为：所有者可读可写可执行，组成员可写可读可执行，其他用户可写可读可执行。</p>
+<p>​		一般为了网站安全，上传目录会设置文件权限，如不可执行脚本，目的是防止上传限制被突破。此时上传脚本进来还是没用的，应该尝试把脚本传到其他具有可执行权限的目录里。</p>
+<p>​		探测服务端 web 中间件类型，抓个包看响应头即可。</p>
+<p>​		识别操作系统类型的方法：</p>
+<ol>
+<li><p>如果有网站，更改大小写访问如 <code>www.xxx.com/index.phP</code> 。如果正常，则是 Windows ，因为 Windows 对大小写不敏感。如果访问失败，则是 Linux 。</p>
+</li>
+<li><p>ping 一下看 TTL 。但由于 TTL 值可被修改且不能具体到操作系统的某个版本，所以一般不用。</p>
+<blockquote>
+<p>TTL（Time To Live，生存时间）是 IP 协议包中的一个值，当我们使用 Ping 命令时，本地计算机会向目的主机发送数据包，但是有的数据包会因为一些特殊的原因不能正常传送到目的主机，如果没有设置 TTL 值的话，数据包会一直在网络上面传送，浪费网络资源。数据包在传送的时候至少会经过一个以上的路由器，当数据包经过一个路由器的时候，TTL 就会自动减 1 ，如果减到 0 了还是没有传送到目的主机，那么这个数据包就会自动丢失。</p>
+<p>例如：如果一个主机的 TTL 是64，当它经过 64 个路由器后还没有将数据包发送到目的主机的话，这个数据包就会自动丢弃。</p>
+<p>常见操作系统的 TTL：</p>
+<ul>
+<li>WINDOWS NT&#x2F;2000  TTL：128</li>
+<li>WINDOWS 95&#x2F;98   TTL：32</li>
+<li>UNIX        TTL：255</li>
+<li>LINUX       TTL：64</li>
+<li>WIN7      TTL：64</li>
+</ul>
+</blockquote>
+</li>
+<li><p>nmap 扫描。</p>
+</li>
+</ol>
+<p>​		识别数据库类型的方法：</p>
+<ol>
+<li>根据网站的构建语言推断，如果 PHP 常用 MySQL 。</li>
+<li>nmap 扫描开放端口，通过端口识别数据库。<ul>
+<li>MySQL：3306</li>
+<li>Oracle：1521</li>
+<li>SQL Server：1433</li>
+<li>DB2：50000</li>
+<li>PostgreSQL：5432</li>
+<li>MongoDB：27017</li>
+<li>pointbase：9092</li>
+<li>Sybase：5000</li>
+<li>Redis：6379</li>
+<li>memcached：11211</li>
+</ul>
+</li>
+</ol>
+<p>​		越权，指越过该角色原有的权限，访问了没有授权的资源或信息。越权分为水平越权和垂直越权。</p>
+<ul>
+<li><p>水平越权：相同级别（权限）的用户或同一角色的不同用户之间的越权。</p>
+</li>
+<li><p>垂直越权：不同级别之间或不同角色之间的越权，又分为向上越权和向下越权。</p>
+</li>
+</ul>
+<p>​		拖库，即数据库中数据的导出操作。</p>
+<p>​		0day 的含义是破解，是指一个软件或系统中存在的安全漏洞，而开发者还没有发布相应的补丁或修复程序。这意味着攻击者可以利用这个漏洞来进行攻击，因为开发者还没有意识到漏洞的存在或者尚未提供解决方案。</p>
+<p>​		0day漏洞通常是黑客或安全研究人员在软件或系统发布之前发现的。由于开发者还没有意识到漏洞的存在，所以被利用的时间窗口被称为“零日”（Zero-day）。一旦漏洞被开发者或安全研究人员发现，他们将开始开发并发布补丁来修复该漏洞，此时漏洞将不再是 0day 漏洞。</p>
+<p>​		在 Web 方面，比如某一开源 CMS 发布出来，被攻击者找到 0day 漏洞，但漏洞并没有公开，也没有提交给厂商，所以也就没有补丁。这种情况下使用 0day 攻击此系列的网站可以说是百发百中，使用这一 CMS 的所有用户都可能受波及。由此可见，用户量越大，0day 的威力越大。</p>
+<p>​		exp，即 exploit，漏洞利用代码。</p>
+<p>​		poc ，漏洞验证代码。</p>
+<p>​		payload ，可以理解为 exp 是“大”，而 payload 是“小”。payload 也是 exp 的核心部分。</p>
+<p>​		有时候某个 MD5 或其他的哈希值解不出，可能是因为它加了盐。</p>
+<p>​		在密码学中，通过在密码任意固定位置插入特定字符串，让散列后的结果和使用原始密码的散列结果不相符，这样一个过程我们称之为“加盐”。</p>
+<p>​		“盐值”是一组随机的字符串，被称为 Salt 。Salt 可以插在最前面、最后面，也可以插在中间，可分开插入也可倒序。</p>
+<p>​		CMS（Content Management System）内容管理系统，主要是为了方便发布网络内容而存在的一体化 Web 管理系统。</p>
+<p>​		通常 CMS 有一个后台，登录后台进入一个可视化的操作界面，便可对网站进行一系列操作，比如发布内容、创建用户。</p>
+<p>​		若依就是一个 CMS 。</p>
+<p>​		用框架开发，叫一次开发。用 CMS 开发，叫二次开发。</p>
+<p>​		文件 MD5 值的生成命令：<code>certutil -hashfile filename MD5</code> 。</p>
+<p>​		如果还想玩玩用这个 CMS 建的站，可以搜：</p>
+<ol>
+<li><code>intext:Powered by xxx</code></li>
+<li><code>inurl:该CMS的关键文件路径（不带文件名）</code></li>
+</ol>
+<p>​		写漏洞分析报告时，要清楚该漏洞涉及哪一层面：操作系统、网站源码（框架、CMS，还是自己写的）、中间件、数据库，还是第三方软件（如phpAdmin）。是否涉及权限，涉及什么权限，做好风险评估。</p>
+<p>​		根据网站主要功能测漏洞，如：电商——交易、门户——综合、论坛——XSS 。</p>
+<p>​		VPS（Virtual Private Server） 虚拟专用服务器技术，将一台服务器分割成多个虚拟专享服务器的技术。每个 VPS 可分配独立公网 IP 地址、独立操作系统、独立内存、独立 CPU 资源、独立执行程序和独立系统配置等。即相当于一台服务器被分割成多台虚拟机，每台虚拟机作为一个 VPS 供外界使用。</p>
+<p>​		拿租房来比喻，同样是租房子，有的房子是一套房子隔成很多间（VPS），每间都有厨房与卫生间，有的房子租的就是整套房子（云服务器）。　</p>
+<p>　　VPS 的虚拟机运行于一台物理服务器之上，云服务器的虚拟机运行于物理服务器集群之上。</p>
+<p>​		云服务器就是一些实际的硬件设备，通过虚拟化技术，可以大规模统一调度，并当成一台机器的技术。你看不到它在哪里，看不到它的 CPU、内存、硬盘，但是你可以轻松把它当成一台现实中的主机来操作，无论是配置软件、测试性能、还是上传文件都和传统服务器没什么区别。</p>
+<p>　　更重要的是云服务器可以动态平衡负载，当你的带宽、内存、硬盘不够用的时候，可以随时点击鼠标增加相应服务，通过弹性的调整，来实现满足各种变化的需求，同时还能控制成本，这就是云服务器最大的卖点。</p>
+<p>　　VPS 是一台真实主机虚拟成多个小主机，性能往往得不到保障，而云服务器是数量庞大的服务器阵列，在均衡负载之后诞生很多虚拟主机，无论是数据安全还是性能都有基本的保证。</p>
+</article><div class="tag_share"><div class="post_share"></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Mars1y</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Mars1y" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:820338868@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome, my friend!</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/25/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="文件包含漏洞学习">文件包含漏洞学习</a><time datetime="2024-02-24T16:00:00.000Z" title="发表于 2024-02-25 00:00:00">2024-02-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/25/MD5%E7%BB%95%E8%BF%87%E4%B8%8ESHA-1%E7%BB%95%E8%BF%87/" title="MD5绕过与SHA-1绕过">MD5绕过与SHA-1绕过</a><time datetime="2024-02-24T16:00:00.000Z" title="发表于 2024-02-25 00:00:00">2024-02-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/25/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" title="信息泄露">信息泄露</a><time datetime="2024-02-24T16:00:00.000Z" title="发表于 2024-02-25 00:00:00">2024-02-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/25/%E6%95%A3%E5%88%97%E7%A2%B0%E6%92%9E/" title="散列碰撞">散列碰撞</a><time datetime="2024-02-24T16:00:00.000Z" title="发表于 2024-02-25 00:00:00">2024-02-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/25/SQL%E6%B3%A8%E5%85%A5/" title="SQL注入学习">SQL注入学习</a><time datetime="2024-02-24T16:00:00.000Z" title="发表于 2024-02-25 00:00:00">2024-02-25</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Mars1y</div><div class="footer_custom_text">To be continued.</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script src="/js/yituliu.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
