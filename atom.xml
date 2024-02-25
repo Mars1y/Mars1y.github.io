@@ -139,6 +139,30 @@
   </entry>
   
   <entry>
+    <title>CSRF漏洞学习</title>
+    <link href="http://example.com/2024/02/25/CSRF/"/>
+    <id>http://example.com/2024/02/25/CSRF/</id>
+    <published>2024-02-24T16:00:00.000Z</published>
+    <updated>2024-02-25T12:18:36.727Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>​CSRF（Cross-Site Request Forgery），跨站请求伪造。看起来与 XSS 很像，但 XSS 是获取网站受信任用户的信息进行攻击，而 CSRF 并没有获取用户的身份信息，只是通过伪装成用户进行攻击。CSRF 攻击流程示例：</p><ul><li><p>受害者登录 a.com，并保留了登录凭证 Cookie</p></li><li><p>攻击者引诱受害者访问了 b.com</p></li><li><p>b.com 向 a.com 发送了一个请求：a.com&#x2F;act&#x3D;xxx，浏览器会默认携带 a.com 的 Cookie</p></li><li><p>a.com 接收到请求后，对请求进行验证，并确认是受害者的凭证，误以为是受害者自己发送的请求</p></li><li><p>a.com 以受害者的名义执行了 act&#x3D;xx</p></li><li><p>攻击完成，攻击者在受害者不知情的情况下，冒充受害者，让 a.com 执行了攻击者想要的操作</p></li></ul><p>​注意，edge 浏览器限制了不同源网站不能传递 Cookie ，但 IE 没有这个问题。</p><h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><h2 id="GET型"><a href="#GET型" class="headerlink" title="GET型"></a>GET型</h2><p>​类似 XSS：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://example.com/act=xxx&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:none;&quot;</span>/&gt;</span></span><br><span class="line">//一般像这种在<span class="tag">&lt;<span class="name">body</span>&gt;</span>里的，且利用src属性的元素，加上style=&quot;display:none;&quot;会更好</span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;…&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;…&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;…&quot;</span>&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;…&quot;</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">src</span>=<span class="string">&quot;…&quot;</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;…&quot;</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">...</span></span></span><br></pre></td></tr></table></figure><p>​有些情况下（如鼠标悬浮在链接上，或者用户查看了网页源代码），攻击者构造的 URL 会把攻击意图暴露给用户，这种情况可以用短网址进行伪装。</p><h2 id="POST型"><a href="#POST型" class="headerlink" title="POST型"></a>POST型</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://example.com/act=xxx&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;xxx&quot;</span> <span class="attr">value</span>=<span class="string">&quot;xxx&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"><span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">0</span>].<span class="title function_">submit</span>();</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span> //这行代码加不加都行，加了就是一个自动提交</span><br></pre></td></tr></table></figure><h1 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h1><ol><li>二次确认，使用验证码或需要重新输入密码。比如转账时要求用户重新输入密码，进行删除操作时要求用户输入验证码。这个方法可以完全解决 CSRF ，但是出于用户体验考虑，网站不能给所有的操作都加上二次确认。因此该方法只能作为一种辅助手段，不能作为主要解决方案。</li><li>验证 HTTP Referer 字段，该字段记录了此次 HTTP 请求的来源地址。</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;​		CSRF（Cross-Site Request Forgery），跨站请求伪造。看起来与 XSS 很像，但 XSS 是获取网站受信任用</summary>
+      
+    
+    
+    
+    <category term="学习笔记" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="web安全" scheme="http://example.com/tags/web%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
+  
+  <entry>
     <title>upload-labs小记</title>
     <link href="http://example.com/2024/02/08/upload-labs/"/>
     <id>http://example.com/2024/02/08/upload-labs/</id>
