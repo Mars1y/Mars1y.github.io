@@ -66,6 +66,31 @@
   </entry>
   
   <entry>
+    <title>信息泄露</title>
+    <link href="http://example.com/2024/02/25/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
+    <id>http://example.com/2024/02/25/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/</id>
+    <published>2024-02-24T16:00:00.000Z</published>
+    <updated>2024-02-25T08:09:17.166Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="vim泄露"><a href="#vim泄露" class="headerlink" title="vim泄露"></a>vim泄露</h1><p>​<code>vim &lt;filename&gt;</code> 命令，用 vim 打开文件。</p><p>​用 vim 编辑文件时，如果正在编辑中的文件意外退出了，将会自动创建一个备份文件。如果文件名是 test.txt ，那么备份文件就是 .test.txt.swp ，并且备份文件不会展示出来。如果管理员没有删除这个备份文件，那么这个备份文件可能会被下载下来利用。</p><p>​使用 <code>vim -r .test.txt.swf</code> 命令打开备份文件。</p><p>​例题，<a href="https://www.nssctf.cn/problem/3866">[LitCTF 2023]Vim yyds</a> 。</p><p>​不开工具进行信息搜集，啥也没有。</p><p>​下载页面 HTML 文档和图片文件，均用 vim 打开也没有什么。</p><p>​开启目录扫描，发现主页面文件为 <code>index.php</code> ，尝试访问 <code>/.index.php.swf</code> ，浏览器自动下载了该文件，说明存在 vim 泄露。</p><p>​vim 打开 .index.php.swf ，审计代码。</p><p>​payload：<code>password=R2l2ZV9NZV9Zb3VyX0ZsYWc=&amp;cmd=cat /flag</code> 。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;vim泄露&quot;&gt;&lt;a href=&quot;#vim泄露&quot; class=&quot;headerlink&quot; title=&quot;vim泄露&quot;&gt;&lt;/a&gt;vim泄露&lt;/h1&gt;&lt;p&gt;​		&lt;code&gt;vim &amp;lt;filename&amp;gt;&lt;/code&gt; 命令，用 vim 打开文件。&lt;/p&gt;
+&lt;p</summary>
+      
+    
+    
+    
+    <category term="学习笔记" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="web安全" scheme="http://example.com/tags/web%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
+  
+  <entry>
     <title>upload-labs小记</title>
     <link href="http://example.com/2024/02/08/upload-labs/"/>
     <id>http://example.com/2024/02/08/upload-labs/</id>
