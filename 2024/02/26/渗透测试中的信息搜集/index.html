@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>渗透测试中的信息搜集 | Mars1y</title><meta name="author" content="Mars1y"><meta name="copyright" content="Mars1y"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="​		目标网站如果用了 CDN 技术，对于安全测试是有阻碍的，必须想办法绕过，不然测试意义不大。	 ​		查看目标网站是否用了 CDN 技术，可以超级 ping 一下，看响应 IP 是否都一样。 ​		CDN 绕过方法：  子域名查询。如 computer.xxx.edu.cn 和 www.xxx.edu.cn 是同一个 IP，即使不是同一个 IP ，也可能在同一个网段。此时扫一下存活 IP 或爆">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透测试中的信息搜集">
+<meta property="og:url" content="http://example.com/2024/02/26/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/index.html">
+<meta property="og:site_name" content="Mars1y">
+<meta property="og:description" content="​		目标网站如果用了 CDN 技术，对于安全测试是有阻碍的，必须想办法绕过，不然测试意义不大。	 ​		查看目标网站是否用了 CDN 技术，可以超级 ping 一下，看响应 IP 是否都一样。 ​		CDN 绕过方法：  子域名查询。如 computer.xxx.edu.cn 和 www.xxx.edu.cn 是同一个 IP，即使不是同一个 IP ，也可能在同一个网段。此时扫一下存活 IP 或爆">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/avatar.jpg">
+<meta property="article:published_time" content="2024-02-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T05:50:52.354Z">
+<meta property="article:author" content="Mars1y">
+<meta property="article:tag" content="web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2024/02/26/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '渗透测试中的信息搜集',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-02-26 13:50:52'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mogai.css"><link rel="stylesheet" href="/css/font/iconfont.css"><link rel="stylesheet" href="/css/yituliu.css"><meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="Mars1y" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon--home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-exe-article-primary"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-Link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-geren"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="Mars1y"></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon--home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-exe-article-primary"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-Link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-geren"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">渗透测试中的信息搜集</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-02-25T16:00:00.000Z" title="发表于 2024-02-26 00:00:00">2024-02-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="渗透测试中的信息搜集"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>​		目标网站如果用了 CDN 技术，对于安全测试是有阻碍的，必须想办法绕过，不然测试意义不大。	</p>
+<p>​		查看目标网站是否用了 CDN 技术，可以超级 ping 一下，看响应 IP 是否都一样。</p>
+<p>​		CDN 绕过方法：</p>
+<ol>
+<li><p>子域名查询。如 computer.xxx.edu.cn 和 <a target="_blank" rel="noopener" href="http://www.xxx.edu.cn/">www.xxx.edu.cn</a> 是同一个 IP，即使不是同一个 IP ，也可能在同一个网段。此时扫一下存活 IP 或爆一下网段，及扫一下 IP 对应开放端口，就可能找到主站真实 IP 。</p>
+</li>
+<li><p>邮件服务查询。因为外部用户对邮件服务一般访问较少，多为公司内部使用，所以架设 CDN 的可能性不大。但是有可能采用了反向代理技术，即你主动去访问它，可能访问到的只是一个代理。应该让它主动访问你，比如给你发一个邮件，那么就可能暴露该网站的真实 IP 。</p>
+<p>网页端打开它发过来的邮件，右键查看邮件源码，在里面找 IP 。如果你不确定这个是不是主站真实 IP （有可能跟你用其他方法如 <code>ping xxx.com</code> 得到的 IP 不一样），那社工一下。查一下 IP 所在区域，再对比网站备案地址、公司所在位置，地点相近的那个 IP 可能性更大。</p>
+</li>
+<li><p>国外地址请求。有的网站主要用户群体在国内，所以可能针对国外就没有架设 CDN 了。如果用一个国外的地址去访问，就可能得到网站的真实 IP 。</p>
+</li>
+<li><p>遗留文件。如某些用 PHP 写的网站，可能存在 phpinfo.php 这类信息文件，且可以访问，那么里面的 IP 可能就是网站的真实 IP 。</p>
+<p><img src="https://raw.githubusercontent.com/Mars1y/ImageHosting/main/blog/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/1.png"></p>
+</li>
+</ol>
+<p>​		<code>inurl:phpinfo.php</code> 。</p>
+<ol start="5">
+<li>DDoS 。两种方法：<ul>
+<li>收集所有响应 IP ，可能里面就存在真实 IP 。因为可能有些请求就在主机旁边，其响应由主机发出。</li>
+<li>DDoS 一个 CDN ，当这个 CDN 的流量挂了，真实 IP 就暴露了。</li>
+</ul>
+</li>
+<li>DNS 历史记录。有的站可能在一开始没有架设 CDN ，后来因为访问量变大而架设 CDN ，所以查 DNS 历史记录就可能查得到真实 IP 。</li>
+</ol>
+<p>​		获取到真实 IP 后，修改本地 hosts 文件，就可以永久绕过 CDN 。</p>
+<hr>
+
+<p>​		大部分网站加或不加 www 访问时，都会访问到同一个网页。如 <code>baidu.com</code> 和 <code>www.baidu.com</code> ，即 www 对应的那个网页。 </p>
+<p>​		但是如果该网站架设了 CDN ，那么这两种方式对应的 IP 是不一样的，如百度：</p>
+<p><img src="https://raw.githubusercontent.com/Mars1y/ImageHosting/main/blog/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/3.png"></p>
+<p>​		因为一般用户访问时都会加上 www ，但为了访问的便利性和网站的一般设置，会设置如下：</p>
+<p>​		<img src="https://raw.githubusercontent.com/Mars1y/ImageHosting/main/blog/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/2.png"></p>
+<p>​		但是一般只有主站会这么设置，CDN 站就只有 www 而没有 * 。</p>
+<p>​		所以一般不加 www 的那个 url 的 IP 就是主站 IP 。</p>
+<hr>
+
+<p>​		一般 m.xxx.com 是手机访问时站点，如 m.baidu.com 。</p>
+<hr>
+
+<p>​		信息搜集要完成的任务：</p>
+<ol>
+<li><p>有无 CDN 。</p>
+</li>
+<li><p>编程语言、框架类型或 CMS 类型。</p>
+</li>
+<li><p>操作系统、搭建平台类型（如PHPStudy）、数据库类型。</p>
+<p>一般用第三方搭建平台（PHPStudy、宝塔等）管理站点的，响应包中 Server 字段的内容是比较多的，如 <code>Server: Apache/2.4.23 (Win32) OpenSSL/1.0.2j PHP/5.4.45</code> 。如果是自己下载 Apache、Nginx 等中间件，自己搭建的网站，就不会这么全。</p>
+</li>
+<li><p>有无 WAF ，有 WAF 的一般响应包里会带 <code>X-Powered-By: [xxx]WAF[xxx] </code> 字段。</p>
+<p>先看有没有 WAF 再扫，直接开扫会被 WAF 封锁 IP 。</p>
+<p>一般封 IP 是因为网站识别到你是爬虫程序（UA头判别），所以你可以修改 UA 为官方浏览器的爬虫来绕过。当然如果是针对异常流量封 IP ，那就没办法了。</p>
+</li>
+<li><p>子域名搜集、顶级域名搜集、IP 收集、目录扫描、端口扫描。</p>
+<p>可能该站换过顶级域名，或同时备案了其他顶级域名，如 <code>www.baidu.org</code> 、<code>www.baidu.net</code> 。</p>
+</li>
+<li><p>社工。</p>
+</li>
+</ol>
+<hr>
+
+<p>​		在信息搜集的过程中，要敏锐嗅探，总是询问“这个地方是否可能存在漏洞”。</p>
+<hr>
+
+<p>​		根据关键字进行信息搜集，如网站关键字、xxx 公司、xxx 产品。</p>
+<hr>
+
+<p>​		目录扫描，用工具开扫的话，一般会被 waf 拦截。原因：</p>
+<ol>
+<li>工具发送的请求包的请求方式一般不是 GET 或 POST ，而是响应更快的 HEAD 等，这不符合一般用户使用浏览器的<strong>访问习惯</strong>。</li>
+<li>工具发送请求包的速度很快，不符合一般用户使用浏览器的<strong>访问速度</strong>。</li>
+</ol>
+<p>​		绕过思路一般就是围绕这两点展开。绕过方法：</p>
+<ol>
+<li>修改请求方式。</li>
+<li>延时请求。效率很低，不得已的方法。</li>
+<li>修改请求数据包，模拟用户使用浏览器发送的请求。工具的请求包跟浏览器是不一样的，有一些字段没有， UA 头也不一样，所以可根据浏览器的请求包自定义工具的请求包，模拟浏览器发送的请求。</li>
+<li>如果第三种方法由于工具灵活性不高而无法完全自定义，那就写脚本实现。</li>
+</ol>
+<blockquote>
+<p>对于第三和第四种方法，请求包的 UA 头的值可以有两种：浏览器的 UA 头和爬虫引擎。</p>
+<p>如果用浏览器的 UA 头，在不使用延时请求的情况下，也会有因为不符合用户访问速度而被拦截的可能，而如果改成官方的爬虫引擎，如百度的爬虫、360 的爬虫，就可以解决这个问题。</p>
+</blockquote>
+<ol start="5">
+<li>写脚本+代理池 。爬取网上可用的代理池的 IP ，整合为代理字典，每一个代理发几个包。</li>
+</ol>
+<p>​		有时候字典也会被 waf 拦截，如请求备份文件、普通用户不可能访问的文件。waf 识别出此 IP 想请求这些文件，然后进行拦截。这种情况的绕过跟绕文件上传黑名单一样。安全都是相通的，主要是掌握思路并融会贯通。</p>
+<hr>
+
+<p>​		如果是违法网站，可能会经常换域名，但一般标题、关键字这些不会换。此时可以 Google Hack ，搜集更多相关站点。</p>
+<hr>
+
+<p>​		旁注：同服务器（即同 IP ）不同站点。如 <code>1.1.1.1</code> 下 <code>www.a.com</code> 和 <code>www.b.com</code> 。</p>
+<p>​		C 段：同网段不同服务器不同站点。如 <code>1.1.1.1</code> 下 <code>www.a.com</code> 和 <code>www.b.com</code> ，<code>1.1.1.2</code> 下 <code>www.c.com</code> 和 <code>www.d.com</code> 。</p>
+<p>​		旁注和 C 段都是目标站点攻击不下时，不得已的策略。</p>
+<hr>
+
+<p>​		社工渠道：微信公众号、微信群、QQ群、钉钉群等。混入其中，伪装身份套取信息。</p>
+<hr>
+
+<p>​		学会工具的联动，比如某 waf 封 Xray ，但不封 AWVS ，但是又想用 Xray ，则可以 AWVS - Burp - Xray 联动：AWVS 扫 - Burp 拦截 - 转发到 7070 端口 - Xray 监听 7070 端口。</p>
+</article><div class="tag_share"><div class="post_share"></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Mars1y</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Mars1y" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:820338868@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome, my friend!</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/26/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" title="渗透测试中的信息搜集">渗透测试中的信息搜集</a><time datetime="2024-02-25T16:00:00.000Z" title="发表于 2024-02-26 00:00:00">2024-02-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/25/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="文件包含漏洞学习">文件包含漏洞学习</a><time datetime="2024-02-24T16:00:00.000Z" title="发表于 2024-02-25 00:00:00">2024-02-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/25/MD5%E7%BB%95%E8%BF%87%E4%B8%8ESHA-1%E7%BB%95%E8%BF%87/" title="MD5绕过与SHA-1绕过">MD5绕过与SHA-1绕过</a><time datetime="2024-02-24T16:00:00.000Z" title="发表于 2024-02-25 00:00:00">2024-02-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/25/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" title="信息泄露">信息泄露</a><time datetime="2024-02-24T16:00:00.000Z" title="发表于 2024-02-25 00:00:00">2024-02-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/25/%E6%95%A3%E5%88%97%E7%A2%B0%E6%92%9E/" title="散列碰撞">散列碰撞</a><time datetime="2024-02-24T16:00:00.000Z" title="发表于 2024-02-25 00:00:00">2024-02-25</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Mars1y</div><div class="footer_custom_text">To be continued.</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script src="/js/yituliu.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
