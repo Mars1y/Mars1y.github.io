@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/avatar.jpg">
 <meta property="article:published_time" content="2024-02-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-08T10:09:21.935Z">
+<meta property="article:modified_time" content="2024-02-28T13:25:55.488Z">
 <meta property="article:author" content="Mars1y">
 <meta property="article:tag" content="web安全">
 <meta name="twitter:card" content="summary">
@@ -56,7 +56,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-02-08 18:09:21'
+  postUpdate: '2024-02-28 21:25:55'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -145,7 +145,7 @@
       }
       detectApple()
     })(window)</script><link rel="stylesheet" href="/css/mogai.css"><link rel="stylesheet" href="/css/font/iconfont.css"><link rel="stylesheet" href="/css/yituliu.css"><meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="Mars1y" type="application/atom+xml">
-</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon--home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-exe-article-primary"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-Link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-geren"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="Mars1y"></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon--home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-exe-article-primary"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-Link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-geren"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">文件上传漏洞学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-02-07T16:00:00.000Z" title="发表于 2024-02-08 00:00:00">2024-02-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="文件上传漏洞学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><em><strong>建议结合 upload-labs 笔记一起看</strong></em></p>
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon--home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-exe-article-primary"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-Link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-geren"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="Mars1y"></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon--home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-exe-article-primary"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-Link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-geren"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">文件上传漏洞学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-02-07T16:00:00.000Z" title="发表于 2024-02-08 00:00:00">2024-02-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="文件上传漏洞学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><em><strong>建议结合 upload-labs 笔记一起看</strong></em></p>
 <h1 id="常见突破方式"><a href="#常见突破方式" class="headerlink" title="常见突破方式"></a>常见突破方式</h1><h2 id="客户端验证"><a href="#客户端验证" class="headerlink" title="客户端验证"></a>客户端验证</h2><ol>
 <li>禁用 js 。</li>
 <li>删除、更改 js 或 js 的触发条件。</li>
@@ -216,7 +216,7 @@
 
 <p>​		根据开发的思路，获取 filename 的值大概率是匹配引号内的值。现在将引号不闭合或者塞入非黑名单的值，那么 filename 的值将被干扰，从而绕过 waf 。</p>
 <h1 id="解析漏洞"><a href="#解析漏洞" class="headerlink" title="解析漏洞"></a>解析漏洞</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>​		文件解析漏洞，是指 web 容器在解析文件时将文件解析成脚本文件格式并得以执行而产生的漏洞，攻击者可以利用该漏洞实现非法文件的解析。</p>
-<h2 id="Apache"><a href="#Apache" class="headerlink" title="Apache"></a>Apache</h2><p>​		Apache 在解析扩展名时是从右向左进行，如果遇到不能识别的扩展名则跳过，像 .rar、.gif 是 Apache 不能识别的。假如上传文件 xxx.php.bb.rar，.rar 不认识，向前解析，.bb 也不认识，向前解析，直到 .php 。</p>
+<h2 id="Apache"><a href="#Apache" class="headerlink" title="Apache"></a>Apache</h2><p>​		Apache 的解析漏洞依赖于一个特性： Apache 默认一个文件可以有多个以点分割的后缀，当最右边的后缀无法识别（不在 mime.types 文件内），则跳过继续向左识别，直到识别到合法后缀才进行解析。像 .rar、.gif 是 Apache 不能识别的，假如上传文件 xxx.php.bb.rar，.rar 不认识，向前解析，.bb 也不认识，向前解析，直到 .php 。</p>
 <p>​		影响版本：</p>
 <ul>
 <li>Apache 2.0.x &lt;&#x3D; 2.0.59</li>
@@ -254,7 +254,7 @@
 <li>如果网站目录中有一个以 .asp、.asa 结尾为名的文件夹，那么该文件夹下的所有文件都会被当作 .asp 文件来执行。</li>
 <li>解析文件名时会将分号后面的内容丢弃，所以可构造如 xxx.asp;.jpg 来绕过黑名单检测。</li>
 </ul>
-<p>​		IIS6.0 默认的可执行文件除了 .asp 还包含这三种：xx.asa、xx.cer、xx.cdx ，因为这三个扩展名和 .asp 都是用同一个 asp.dll 文件来执行。可在 IIS管理器-&gt;处理程序映射 中查看：</p>
+<p>​		IIS6.x 默认的可执行文件除了 .asp 还包含这三种：xx.asa、xx.cer、xx.cdx ，因为这三个扩展名和 .asp 都是用同一个 asp.dll 文件来执行，此三种扩展名的文件也会解析为 asp 。可在 IIS管理器-&gt;处理程序映射 中查看：</p>
 <p><img src="https://raw.githubusercontent.com/Mars1y/ImageHosting/main/blog/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/2.png"></p>
 <p><img src="https://raw.githubusercontent.com/Mars1y/ImageHosting/main/blog/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/1.png"></p>
 <p>​		IIS 7.0&#x2F;7.5 中也存在 PHP CGI 解析漏洞。</p>
